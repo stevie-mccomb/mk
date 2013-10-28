@@ -3,19 +3,30 @@ function SheetCtrl($scope) {
 		{
 			'name': 'trista',
 			'character': 'goldyx',
-			'portrait': 'images/portraits/goldyx.jpg'
+			'portrait': 'images/goldyx.jpg',
+			'faction': 'draconum',
+			'level': '21'
 		},
 		{
 			'name': 'stevie',
-			'character': 'tovak'
-		},
-		{
-			'name': 'rachel',
-			'character': 'arythea'
+			'character': 'tovak',
+			'portrait': 'images/tovak.jpg',
+			'faction': 'ninth circle',
+			'level': '28'
 		},
 		{
 			'name': 'dude',
-			'character': 'norowas'
+			'character': 'norowas',
+			'portrait': 'images/norowas.jpg',
+			'faction': 'high-elves',
+			'level': '24'
+		},
+		{
+			'name': 'rachel',
+			'character': 'arythea',
+			'portrait': 'images/arythea.jpg',
+			'faction': 'blood cult',
+			'level': '19'
 		}
 	];
 

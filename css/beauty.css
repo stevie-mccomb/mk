@@ -6,6 +6,11 @@
 	box-sizing: border-box;
 }
 
+@font-face {
+    font-family: factor;
+    src: url(fonts/factor.ttf);
+}
+
 body {
 	background: #000;
 }
@@ -50,4 +55,60 @@ body {
 	position: absolute;
 	right: 0;
 	bottom: 0;
+}
+
+.portrait-frame {
+	width: 120px;
+	height: 120px;
+	border-radius: 100%;
+	margin: 10px;
+	box-shadow: 0 0 10px #d4af37;
+	overflow: hidden;
+}
+
+.portrait-frame:before {
+	content: ' ';
+	width: 120px;
+	height: 120px;
+	position: absolute;
+	border-radius: 100%;
+	box-shadow: 0 0 10px #000 inset;
+}
+
+.profile {
+	width: 300px;
+	height: 100px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.profile h2 {
+	color: #d4af37;
+	text-transform: uppercase;
+	font-family: factor, sans-serif;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.profile hr {
+	width: 300px;
+	border-color: #444;
+	position: absolute;
+	top: 36px;
+}
+
+.profile p {
+	display: inline;
+	position: absolute;
+	color: #d4af37;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	top: 56px;
+	right: 10px;
+}
+
+.profile p:first-of-type {
+	left: 10px;
 }

@@ -9,7 +9,17 @@
 <body ng-app>
 
 	<div id="container" ng-controller="SheetCtrl">
-		<div ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)"></div>
+
+		<div ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)">
+			<div class="portrait-frame"><img ng-src="{{ player.portrait }}" /></div>
+			<div class="profile">
+				<h2>{{ player.character }}</h2>
+				<hr />
+				<p>L. {{ player.level }}</p>
+				<p>{{ player.faction }}</p>
+			</div>
+		</div>
+
 	</div>
 
 </body>
