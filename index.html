@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8" />
+	<title>Mage Knight Character Sheets</title>
 	<link rel="stylesheet" href="css/beauty.css" />
 	<script type="text/javascript" src="js/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/controllers/sheetController.js"></script>
@@ -11,12 +12,27 @@
 	<div id="container" ng-controller="SheetCtrl">
 
 		<div ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)">
+		<div class="reputation-highlight" ng-style="reputationStyles(player)"></div>
 			<div class="portrait-frame"><img ng-src="{{ player.portrait }}" /></div>
 			<div class="profile">
 				<h2>{{ player.character }}</h2>
 				<hr />
-				<p>L. {{ player.level }}</p>
+				<p>L. {{ playerLevel(player) }}</p>
 				<p>{{ player.faction }}</p>
+			</div>
+			<div class="stats-container">
+				<div class="fame-container">
+					<h2>FAME</h2>
+					<p>{{ player.fame }}</p>
+					<button type="button" ng-click="decreaseFame(player)">-</button>
+					<button type="button" ng-click="increaseFame(player)">+</button>
+				</div>
+				<div class="reputation-container">
+					<h2>REPUTATION</h2>
+					<p>{{ player.reputation }}</p>
+					<button type="button" ng-click="decreaseRep(player)">-</button>
+					<button type="button" ng-click="increaseRep(player)">+</button>
+				</div>
 			</div>
 		</div>
 
