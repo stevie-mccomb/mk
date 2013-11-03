@@ -1,74 +1,171 @@
 var app = angular.module('mageKnight', [])
 
-var PlayerFactory = app.factory('PlayerFactory', function() {
+var sheetContainer = app.directive('sheetContainer', ['$rootScope', function($rootScope) {
 	return {
-		'players': [
-			{
-				'number': '1',
-				'name': 'trista',
-				'character': 'goldyx',
-				'portrait': 'images/goldyx.jpg',
-				'faction': 'draconum',
-				'level': '1',
-				'fame': '0',
-				'reputation': '0'
-			},
-			{
-				'number': '2',
-				'name': 'stevie',
-				'character': 'tovak',
-				'portrait': 'images/tovak.jpg',
-				'faction': 'ninth circle',
-				'level': '1',
-				'fame': '0',
-				'reputation': '0'
-			},
-			{
-				'number': '3',
-				'name': 'dude',
-				'character': 'norowas',
-				'portrait': 'images/norowas.jpg',
-				'faction': 'high-elves',
-				'level': '1',
-				'fame': '0',
-				'reputation': '0'
-			},
-			{
-				'number': '4',
-				'name': 'rachel',
-				'character': 'arythea',
-				'portrait': 'images/arythea.jpg',
-				'faction': 'blood cult',
-				'level': '1',
-				'fame': '0',
-				'reputation': '0'
+		link: function(scope, elem) {
+			var gridType = 'single';
+
+			scope.playerPosition = function(num) {
+				switch(num) {
+					case 0:
+						if (gridType == 1) {
+							return {
+								'position': 'absolute', 
+								'top': '50%',
+								'left': '50%',
+								'margin-top': '-150px',
+								'margin-left': '-230px'
+							}
+						} else if (gridType == 2) {
+							return {
+								'position': 'absolute', 
+								'top': '50%',
+								'left': '0',
+								'margin-top': '-150px'
+							}
+						} else {
+							return {
+								'position': 'absolute',
+								'top': '0',
+								'left': '0'
+							};
+						}
+					break;
+					case 1:
+						if (gridType == 2) {
+							return {
+								'position': 'absolute',
+								'top': '50%',
+								'right': '0',
+								'margin-top': '-150px'
+							}
+						} else {
+							return {
+								'position': 'absolute',
+								'top': '0',
+								'right': '0'
+							};
+						}
+					break;
+					case 2:
+						if (gridType == 3) {
+							return {
+								'position': 'absolute',
+								'bottom': '0',
+								'left': '50%',
+								'margin-left': '-230px'
+							};
+						} else {
+							return {
+								'position': 'absolute',
+								'bottom': '0',
+								'left': '0'
+							};
+						}
+					break;
+					case 3:
+						return {
+							'position': 'absolute',
+							'bottom': '0',
+							'right': '0'
+						};
+					break;
+					default:
+						// nada
+					break;
+				}
 			}
-		]
+
+			$rootScope.$watch('gameStarted', function(newVal, oldVal) {
+				if (newVal != oldVal && newVal == true) {
+					gridType = $rootScope.players.length;
+				}
+			});
+		}
 	}
-});
+}]);
 
 var startingSheet = app.directive('startingSheet', ['$rootScope', function($rootScope) {
 	return {
 		link: function(scope, elem) {
-			scope.addPlayer = function() {				
+			scope.addPlayer = function(playerNumber) {				
 				$rootScope.newPlayer = {
-					'portrait': 'images/default-portrait.png'
+					'number': playerNumber,
+					'portrait': 'images/default-portrait.png',
+					'level': 1,
+					'fame': 0,
+					'reputation': 0
 				};
 			};
-			scope.choosePortrait = function(character) {
-				$rootScope.newPlayer.portrait = 'images/' + character + '.jpg';
+			scope.closeSettings = function() {
+				$rootScope.newPlayer = null;
+			};
+			scope.chooseCharacter = function(character) {
+				if (!$rootScope.chosenCharacters) {
+					$rootScope.chosenCharacters = [];
+				}
+				if ($rootScope.chosenCharacters.indexOf(character) < 0) {
+					$rootScope.newPlayer.character = character;
+					$rootScope.newPlayer.portrait = 'images/' + character + '.jpg';
+				}
 			};
 			scope.createPlayer = function() {
-				console.log('boom');
+				if (!$rootScope.players) {
+					$rootScope.players = [];
+				}
+				if ($rootScope.newPlayer.name && $rootScope.newPlayer.portrait != 'images/default-portrait.png') {
+					$rootScope.players.push($rootScope.newPlayer);
+					$rootScope.chosenCharacters.push($rootScope.newPlayer.character);
+					switch($rootScope.newPlayer.number) {
+						case 1:
+							$rootScope.playerOneExists = true;
+							$rootScope.playerOne = $rootScope.newPlayer;
+						break;
+						case 2:
+							$rootScope.playerTwoExists = true;
+							$rootScope.playerTwo = $rootScope.newPlayer;
+						break;
+						case 3:
+							$rootScope.playerThreeExists = true;
+							$rootScope.playerThree = $rootScope.newPlayer;
+						break;
+						case 4:
+							$rootScope.playerFourExists = true;
+							$rootScope.playerFour = $rootScope.newPlayer;
+						break;
+						default:
+							// nada
+						break;
+					}
+					$rootScope.newPlayer = undefined;
+				}
+			};
+			scope.startGame = function() {
+				if ($rootScope.players) {
+					$rootScope.gameStarted = true;
+				}
 			};
 		}
 	}
 }]);
 
-var fameContainer = app.directive('fameContainer', [function() {
+var fameContainer = app.directive('fameContainer', ['$rootScope', '$timeout', function($rootScope, $timeout) {
 	return {
 		link: function(scope, elem) {
-			console.log(scope);
+			scope.$watch('player.level', function(newVal, oldVal) {
+				if (newVal != oldVal) {
+					scope.levelNotify(newVal);
+				}
+			});
+			scope.levelNotify = function(newLevel) {
+				$rootScope.levelingUp = true;
+				$rootScope.newLevel = newLevel;
+				$rootScope.leveledPlayer = scope.player.name;
+				var flashTimer = $timeout(function() {
+					$rootScope.levelingUp = false;
+					$rootScope.newLevel = undefined;
+				}, 10000);
+			};
 		}
 	}
 }]);

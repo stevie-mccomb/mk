@@ -10,40 +10,53 @@
 </head>
 <body ng-app="mageKnight">
 
-	<div id="container" ng-controller="SheetCtrl">
+	<div class="shade" ng-show="newPlayer"></div>
 
-		<div ng-hide="players.length" class="starting-sheet" starting-sheet>
+	<div id="container" ng-controller="SheetCtrl" sheet-container>
+
+		<!-- Setup Sheet -->
+
+		<div ng-hide="gameStarted" class="starting-sheet" starting-sheet>
 			<img src="images/mk-logo.png" alt="Mage Knight" class="logo" />
 			<div class="player-button-container">
-				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
-				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
-				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
-				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer(1)"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer(2)"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer(3)"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer(4)"><p><i>+</i><br />Add Player</p></button>
+				<div class="player-card one" ng-show="playerOneExists"><img ng-src="{{ playerOne.portrait }}" /><h2>{{ playerOne.name }}</h2></div>
+				<div class="player-card two" ng-show="playerTwoExists"><img ng-src="{{ playerTwo.portrait }}" /><h2>{{ playerTwo.name }}</h2></div>
+				<div class="player-card three" ng-show="playerThreeExists"><img ng-src="{{ playerThree.portrait }}" /><h2>{{ playerThree.name }}</h2></div>
+				<div class="player-card four" ng-show="playerFourExists"><img ng-src="{{ playerFour.portrait }}" /><h2>{{ playerFour.name }}</h2></div>
 			</div>
+
+			<button type="button" class="start-button" ng-click="startGame()">Begin Game</button>
+
 			<div class="player-settings" ng-show="newPlayer">
+				<span class="close-button" ng-click="closeSettings()">X</span>
 				<div class="new-portrait-frame"><img ng-src="{{ newPlayer.portrait }}" /></div>
 				<form method="post" class="new-player-form">
-					<label for="newPlayerName"><input type="text" name="new-player-name" id="newPlayerName" placeholder="Player's Name" /></label>
-					<button type="button" style="background: url('images/goldyx.jpg') 50%;" ng-click="choosePortrait('goldyx')"></button>
-					<button type="button" style="background: url('images/tovak.jpg') 50%;" ng-click="choosePortrait('tovak')"></button>
-					<button type="button" style="background: url('images/norowas.jpg') 50%;" ng-click="choosePortrait('norowas')"></button>
-					<button type="button" style="background: url('images/arythea.jpg') 50%;" ng-click="choosePortrait('arythea')"></button>
+					<label for="newPlayerName"><input type="text" name="new-player-name" id="newPlayerName" placeholder="Player's Name" ng-model="newPlayer.name" /></label>
+					<button type="button" style="background: url('images/goldyx.jpg') 50%;" ng-click="chooseCharacter('goldyx')"></button>
+					<button type="button" style="background: url('images/tovak.jpg') 50%;" ng-click="chooseCharacter('tovak')"></button>
+					<button type="button" style="background: url('images/norowas.jpg') 50%;" ng-click="chooseCharacter('norowas')"></button>
+					<button type="button" style="background: url('images/arythea.jpg') 50%;" ng-click="chooseCharacter('arythea')"></button>
 					<button type="button" class="create-button" ng-click="createPlayer()">Create</button>
 				</form>
 			</div>
-			<!-- <form method="post" ng-show="newPlayer" class="starting-form">
-				<input type="text" />
-			</form> -->
 		</div>
 
-		<div ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)">
+		<!-- End Setup Sheet -->
+
+		<!-- Player Sheets -->
+
+		<div ng-show="gameStarted" ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)" data-owner="{{ player.name }}">
 		<div class="reputation-highlight" ng-style="reputationStyles(player)"></div>
 			<div class="portrait-frame"><img ng-src="{{ player.portrait }}" /></div>
 			<div class="profile">
 				<h2>{{ player.character }}</h2>
 				<hr />
 				<p>L. {{ playerLevel(player) }}</p>
-				<p>{{ player.faction }}</p>
+				<p>{{ player.name }}</p>
 			</div>
 			<div class="stats-container">
 				<div class="fame-container" fame-container>
@@ -62,6 +75,26 @@
 		</div>
 
 	</div>
+
+	<!-- End Player Sheets -->
+
+	<!-- Notifications -->
+
+	<div class="level-up-notification" ng-show="levelingUp">
+		<span class="close-button" ng-click="levelingUp = false">X</span>
+		<h2>Congratulations, <span style="text-transform: capitalize;">{{ leveledPlayer }}</span>!</h2>
+		<hr />
+		<p>You've leveled up! You're now level {{ newLevel }}, please perform the following tasks as the next player begins their turn:</p>
+		<ul ng-show="(newLevel % 2) == 0">
+			<li>Collect a new Advanced Action!</li>
+			<li>Collect a new Skill!</li>
+		</ul>
+		<ul ng-show="(newLevel % 2) == 1">
+			<li>Collect a new Command Token!</li>
+		</ul>
+	</div>
+
+	<!-- End Notifications -->
 
 </body>
 </html>

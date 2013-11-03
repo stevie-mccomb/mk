@@ -15,6 +15,7 @@ body {
 	background: #000;
 	font-size: 12px;
 	font-family: sans-serif;
+	overflow: hidden;
 }
 
 #container {
@@ -25,6 +26,78 @@ body {
 	left: 50%;
 	margin-top: -320px;
 	margin-left: -480px;
+}
+
+.shade {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	background: rgba(0,0,0,0.9);
+}
+
+.level-up-notification {
+	width: 480px;
+	height: 320px;
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -160px;
+	margin-left: -240px;
+	z-index: 1;
+	border-radius: 10px;
+	border-top: 1px solid #886600;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #886600;
+	background: rgb(252,234,187);
+	background: -moz-linear-gradient(-45deg,  rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(252,234,187,1)), color-stop(50%,rgba(252,205,77,1)), color-stop(51%,rgba(248,181,0,1)), color-stop(100%,rgba(251,223,147,1)));
+	background: -webkit-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: -o-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: -ms-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: linear-gradient(135deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 );
+}
+
+.level-up-notification .close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 18px;
+	text-align: center;
+	color: #fff;
+	margin-top: 6px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.level-up-notification h2 {
+	text-align: center;
+	color: #a60000;
+	font-size: 26px;
+}
+
+.level-up-notification hr {
+	width: 75%;
+	margin: 10px auto;
+	border-top: 1px solid #f8b500;
+	border-bottom: 1px solid #fbdf93;
+}
+
+.level-up-notification p {
+	font-size: 18px;
+}
+
+.level-up-notification ul {
+	margin-top: 40px;
+	margin-left: 60px;
+	font-size: 24px;
+}
+
+.level-up-notification ul li {
+	margin-bottom: 20px;
 }
 
 .starting-sheet {
@@ -47,11 +120,30 @@ body {
 	margin-left: -250px;
 }
 
+.starting-sheet > button {
+	width: 120px;
+	height: 40px;
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin-left: -60px;
+	border: 1px solid #333;
+	border-radius: 5px;
+	background: rgb(252,234,187);
+	background: -moz-linear-gradient(-45deg,  rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(252,234,187,1)), color-stop(50%,rgba(252,205,77,1)), color-stop(51%,rgba(248,181,0,1)), color-stop(100%,rgba(251,223,147,1)));
+	background: -webkit-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: -o-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: -ms-linear-gradient(-45deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	background: linear-gradient(135deg,  rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(251,223,147,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 );
+}
+
 .player-button-container {
 	width: 920px;
-	height: 360px;
+	height: 320px;
 	position: absolute;
-	bottom: 20px;
+	bottom: 60px;
 	left: 20px;
 	background: #222;
 	border-radius: 10px;
@@ -60,7 +152,7 @@ body {
 
 .player-button-container button {
 	width: 210px;
-	height: 340px;
+	height: 300px;
 	float: left;
 	margin-top: 10px;
 	margin-left: 16px;
@@ -91,10 +183,55 @@ body {
 	font-size: 72px;
 }
 
+.player-card {
+	width: 210px;
+	height: 300px;
+	margin-top: 10px;
+	margin-left: 16px;
+	background: #333;
+	border: 1px solid #444;
+	border-radius: 5px;
+	color: #777;
+	font-size: 32px;
+	box-shadow: 0 0 3px #111;
+	cursor: pointer;
+	position: absolute;
+}
+
+.player-card.two {
+	left: 226px;
+}
+
+.player-card.three {
+	left: 452px;
+}
+
+.player-card.four {
+	left: 678px;
+}
+
+.player-card img {
+	margin: 15px;
+	width: 180px;
+	height: 180px;
+	border-radius: 100%;
+	background: #1c1c1c;
+	box-shadow: 0 0 10px #d4af37;
+	overflow: hidden;
+}
+
+.player-card h2 {
+	margin-top: 10px;
+	font-size: 32px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
 .player-settings {
 	width: 320px;
 	height: 480px;
 	position: absolute;
+	z-index: 1;
 	top: 50%;
 	left: 50%;
 	margin-top: -240px;
@@ -106,6 +243,18 @@ body {
 	border-bottom: 1px solid #333;
 	border-left: 1px solid #222;
 	border-radius: 5px;
+}
+
+.player-settings .close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 24px;
+	text-align: center;
+	color: #333;
+	margin-top: 6px;
+	margin-right: 10px;
+	cursor: pointer;
 }
 
 .player-settings .new-portrait-frame {
@@ -264,6 +413,15 @@ body {
 	position: absolute;
 	border-radius: 100%;
 	box-shadow: 0 0 10px #000 inset;
+}
+
+.portrait-frame img {
+	margin-top: -25%;
+	margin-left: -25%;
+}
+
+.portrait-frame img[src="images/norowas.jpg"] {
+	margin-top: 0;
 }
 
 .profile {
