@@ -153,7 +153,7 @@ var fameContainer = app.directive('fameContainer', ['$rootScope', '$timeout', fu
 	return {
 		link: function(scope, elem) {
 			scope.$watch('player.level', function(newVal, oldVal) {
-				if (newVal != oldVal) {
+				if (newVal > oldVal) {
 					scope.levelNotify(newVal);
 				}
 			});
