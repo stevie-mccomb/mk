@@ -1,6 +1,6 @@
-function SheetCtrl($scope, LevelFactory) {
+function SheetCtrl($scope, PlayerFactory) {
 
-	console.log($scope);
+	//$scope.players = PlayerFactory.players;
 
 	$scope.playerPosition = function(num) {
 		switch(num) {

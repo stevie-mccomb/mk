@@ -1,9 +1,10 @@
 var app = angular.module('mageKnight', [])
 
-app.factory('LevelFactory', function() {
+var PlayerFactory = app.factory('PlayerFactory', function() {
 	return {
 		'players': [
 			{
+				'number': '1',
 				'name': 'trista',
 				'character': 'goldyx',
 				'portrait': 'images/goldyx.jpg',
@@ -13,6 +14,7 @@ app.factory('LevelFactory', function() {
 				'reputation': '0'
 			},
 			{
+				'number': '2',
 				'name': 'stevie',
 				'character': 'tovak',
 				'portrait': 'images/tovak.jpg',
@@ -22,6 +24,7 @@ app.factory('LevelFactory', function() {
 				'reputation': '0'
 			},
 			{
+				'number': '3',
 				'name': 'dude',
 				'character': 'norowas',
 				'portrait': 'images/norowas.jpg',
@@ -31,6 +34,7 @@ app.factory('LevelFactory', function() {
 				'reputation': '0'
 			},
 			{
+				'number': '4',
 				'name': 'rachel',
 				'character': 'arythea',
 				'portrait': 'images/arythea.jpg',
@@ -42,6 +46,24 @@ app.factory('LevelFactory', function() {
 		]
 	}
 });
+
+var startingSheet = app.directive('startingSheet', ['$rootScope', function($rootScope) {
+	return {
+		link: function(scope, elem) {
+			scope.addPlayer = function() {				
+				$rootScope.newPlayer = {
+					'portrait': 'images/default-portrait.png'
+				};
+			};
+			scope.choosePortrait = function(character) {
+				$rootScope.newPlayer.portrait = 'images/' + character + '.jpg';
+			};
+			scope.createPlayer = function() {
+				console.log('boom');
+			};
+		}
+	}
+}]);
 
 var fameContainer = app.directive('fameContainer', [function() {
 	return {

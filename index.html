@@ -12,6 +12,30 @@
 
 	<div id="container" ng-controller="SheetCtrl">
 
+		<div ng-hide="players.length" class="starting-sheet" starting-sheet>
+			<img src="images/mk-logo.png" alt="Mage Knight" class="logo" />
+			<div class="player-button-container">
+				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
+				<button type="button" ng-click="addPlayer()"><p><i>+</i><br />Add Player</p></button>
+			</div>
+			<div class="player-settings" ng-show="newPlayer">
+				<div class="new-portrait-frame"><img ng-src="{{ newPlayer.portrait }}" /></div>
+				<form method="post" class="new-player-form">
+					<label for="newPlayerName"><input type="text" name="new-player-name" id="newPlayerName" placeholder="Player's Name" /></label>
+					<button type="button" style="background: url('images/goldyx.jpg') 50%;" ng-click="choosePortrait('goldyx')"></button>
+					<button type="button" style="background: url('images/tovak.jpg') 50%;" ng-click="choosePortrait('tovak')"></button>
+					<button type="button" style="background: url('images/norowas.jpg') 50%;" ng-click="choosePortrait('norowas')"></button>
+					<button type="button" style="background: url('images/arythea.jpg') 50%;" ng-click="choosePortrait('arythea')"></button>
+					<button type="button" class="create-button" ng-click="createPlayer()">Create</button>
+				</form>
+			</div>
+			<!-- <form method="post" ng-show="newPlayer" class="starting-form">
+				<input type="text" />
+			</form> -->
+		</div>
+
 		<div ng-repeat="player in players" class="player-sheet" ng-style="playerPosition($index)">
 		<div class="reputation-highlight" ng-style="reputationStyles(player)"></div>
 			<div class="portrait-frame"><img ng-src="{{ player.portrait }}" /></div>
